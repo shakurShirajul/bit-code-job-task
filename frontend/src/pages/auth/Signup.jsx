@@ -12,7 +12,7 @@ const Signup = () => {
     console.log(data);
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background font-open-sans">
+    <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="w-full max-w-md border border-gray-200 rounded-2xl p-5 shadow-xl space-y-4">
         <div className="space-y-1">
           <h1 className="text-2xl font-bold text-center">Join Our Community</h1>

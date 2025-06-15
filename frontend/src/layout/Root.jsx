@@ -1,9 +1,10 @@
+import Navbar from "../components/shared/Navbar";
 import { Outlet } from "react-router";
 
 const Root = () => {
   return (
-    <div>
-      <h1>Shakur Shirajul</h1>
+    <div className="font-robotoo">
+      <Navbar />
       <Outlet />
     </div>
   );
