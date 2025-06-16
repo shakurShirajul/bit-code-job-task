@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import authRoutes from "./src/routes/authRoutes.js";
 import { database } from "./src/config/db.js";
 
 const app = express();
@@ -17,6 +18,9 @@ app.use(
     credentials: true,
   })
 );
+
+// Auth Routes
+app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.send({ name: "shirajul" });

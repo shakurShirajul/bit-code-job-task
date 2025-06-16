@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { Users } from "../models/User";
-import { generateToken } from "../utils/jwt";
-
+import { Users } from "../models/User.js";
+import { generateToken } from "../utils/jwt.js";
+import bcrypt from "bcryptjs";
 const router = Router();
 
 router.post("/signup", async (req, res) => {
@@ -75,3 +75,5 @@ router.post("/logout", (req, res) => {
     });
   }
 });
+
+export default router;
