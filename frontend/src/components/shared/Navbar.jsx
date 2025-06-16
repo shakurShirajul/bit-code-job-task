@@ -19,9 +19,9 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <div className="shadow-sm fixed w-full z-50 bg-white">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex justify-between items-center h-16 w-full">
           {/* Left Side */}
           <div className="flex items-center">
             <Link to="/">
