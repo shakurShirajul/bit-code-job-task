@@ -1,4 +1,4 @@
-import { Mail, User, Lock, UserPlus } from "lucide-react";
+import { Mail, User, Lock, UserPlus, Image } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 
@@ -22,6 +22,7 @@ const Signup = () => {
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
+            {/* Name */}
             <div className="space-y-2">
               <label className="text-xs font-bold">Name</label>
               <div className="relative">
@@ -60,7 +61,19 @@ const Signup = () => {
                 <p className="text-red-500 text-sm">{errors.email.message}</p>
               )}
             </div>
-
+            {/* Image */}
+            <div className="space-y-2">
+              <label className="text-xs font-bold">User Image</label>
+              <div className="relative">
+                <Image className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Enter image URL (optional)"
+                  className="w-full pl-10 rounded-md py-1.5 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
+                  {...register("image")}
+                />
+              </div>
+            </div>
             {/* Password */}
             <div className="space-y-2">
               <label className="text-xs font-bold">Password</label>
