@@ -14,24 +14,23 @@ const roadmapSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["UI/UX", "Performance", "Feature", "Bug Fix", "DevOps", "Other"],
-      default: "Other",
+      required: true,
     },
     status: {
       type: String,
-      enum: ["Planned", "In Progress", "Completed"],
+      enum: ["Planned", "In Progress", "Completed", "On Hold"],
       default: "Planned",
     },
     upvotes: {
-      type: Number,
-      default: 0,
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+      default: [],
     },
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
-      },
-    ],
+    comments: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Comment",
+      default: [],
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -42,4 +41,4 @@ const roadmapSchema = new mongoose.Schema(
   }
 );
 
-export const Roadmap = mongoose.model("Roadmap", roadmapSchema);
+export const Roadmaps = mongoose.model("Roadmap", roadmapSchema);

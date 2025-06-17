@@ -193,8 +193,24 @@ const Home = () => {
         <div className="flex-1">
           <SearchInput />
         </div>
-        <FilterSelect />
-        <FilterSelect />
+        <FilterSelect
+          options={[
+            "All Status",
+            "Planned",
+            "In Progress",
+            "Completed",
+            "On Hold",
+          ]}
+        />
+        <FilterSelect
+          options={[
+            "All Status",
+            "Planned",
+            "In Progress",
+            "Completed",
+            "On Hold",
+          ]}
+        />
       </div>
 
       <div className="grid grid-cols-3 gap-5">

@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import Navbar from "../components/shared/Navbar";
-import { Outlet } from "react-router";
+import { Navigate, Outlet, useLocation } from "react-router";
 import { useDispatch } from "react-redux";
 import { useGetCurrentUserQuery } from "../features/api/baseAPI";
 import { logoutUser, setUser } from "../features/authSlice";
+import LoadingScreen from "../components/shared/LoadingScreen";
 
 const Root = () => {
   const dispatch = useDispatch();
-  const { data, isSuccess, isError } = useGetCurrentUserQuery();
+  const { data, isSuccess, isLoading, isError } = useGetCurrentUserQuery();
+  const location = useLocation();
 
   useEffect(() => {
     if (isSuccess && data?.user) {
@@ -17,14 +19,24 @@ const Root = () => {
     }
   }, [isSuccess, isError, data, dispatch]);
 
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div>
-      <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 font-robotoo">
-        <div className="max-w-7xl mx-auto pt-10">
-          <Outlet />
+      {data ? (
+        <div>
+          <Navbar />
+          <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 font-robotoo">
+            <div className="max-w-7xl mx-auto pt-10">
+              <Outlet />
+            </div>
+          </div>
         </div>
-      </div>
+      ) : (
+        <Navigate to="/auth/login" replace state={{ from: location }} />
+      )}
     </div>
   );
 };
