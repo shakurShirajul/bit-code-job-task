@@ -1,15 +1,32 @@
 import { Lock, LogIn, Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useLoginMutation } from "../../features/api/baseAPI";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../features/authSlice";
 
 const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
+  const dispatch = useDispatch();
+
+  const [setLoginUser] = useLoginMutation();
+  const navigate = useNavigate();
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      const response = await setLoginUser(data).unwrap();
+      if (response) {
+        dispatch(setUser(response.user));
+        reset();
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
@@ -25,43 +42,49 @@ const Login = () => {
             {/* Email */}
             <div className="space-y-2">
               <label className="text-xs font-bold">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  placeholder="me@example.com"
-                  className="w-full pl-10 rounded-md py-1.5 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^\S+@\S+$/i,
-                      message: "Invalid email format",
-                    },
-                  })}
-                />
+              <div>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <input
+                    placeholder="me@example.com"
+                    className="w-full pl-10 rounded-md py-1.5 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^\S+@\S+$/i,
+                        message: "Invalid email format",
+                      },
+                    })}
+                  />
+                </div>
+                {errors.email && (
+                  <p className="text-red-500 text-xs pl-1">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
-              {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email.message}</p>
-              )}
             </div>
             {/* Password */}
             <div className="space-y-2">
               <label className="text-xs font-bold">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  type="password"
-                  placeholder="****************"
-                  {...register("password", {
-                    required: "Password is required",
-                  })}
-                  className="w-full pl-10 rounded-md py-1.5 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
-                />
+              <div>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <input
+                    type="password"
+                    placeholder="****************"
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
+                    className="w-full pl-10 rounded-md py-1.5 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
+                  />
+                </div>
+                {errors.password && (
+                  <p className="text-red-500 text-xs pl-1">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message}
-                </p>
-              )}
             </div>
             {/* Button */}
             <div className="space-y-2">

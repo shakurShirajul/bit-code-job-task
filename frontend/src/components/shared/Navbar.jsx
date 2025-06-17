@@ -2,9 +2,11 @@ import { LogOut, User } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import logo from "../../assets/logo/logo.png";
 import { Link } from "react-router";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const user = useSelector((state) => state.auth.user);
   const dropdownRef = useRef(null);
 
   // Close dropdown when clicking outside
@@ -40,13 +42,24 @@ const Navbar = () => {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 <img
-                  src="https://avatars.githubusercontent.com/u/80962495?v=4"
+                  src={user?.image}
                   className="h-11 w-1h-11 object-cover"
-                  alt="Avatar"
+                  alt={user?.name}
                 />
               </button>
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                  <button
+                    className="flex items-center gap-0.5 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => {
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    <p className="font-medium">{user?.name}</p>
+                    <p className="w-[200px] truncate text-sm text-muted-foreground">
+                      {user?.email}
+                    </p>
+                  </button>
                   <button
                     className="flex items-center gap-0.5 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     onClick={() => {

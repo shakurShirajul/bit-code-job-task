@@ -202,19 +202,6 @@ const Home = () => {
           <Card key={data.id} data={data} />
         ))}
       </div>
-      <fieldset className="w-full space-y-1 dark:text-gray-800">
-        <label htmlFor="files" className="block text-sm font-medium">
-          Attachments
-        </label>
-        <div className="flex">
-          <input
-            type="file"
-            name="files"
-            id="files"
-            className="px-8 py-12 border-2 border-dashed rounded-md dark:border-gray-300 dark:text-gray-600 dark:bg-gray-100"
-          />
-        </div>
-      </fieldset>
     </div>
   );
 };

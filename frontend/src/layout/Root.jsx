@@ -1,7 +1,22 @@
+import { useEffect } from "react";
 import Navbar from "../components/shared/Navbar";
 import { Outlet } from "react-router";
+import { useDispatch } from "react-redux";
+import { useGetCurrentUserQuery } from "../features/api/baseAPI";
+import { logoutUser, setUser } from "../features/authSlice";
 
 const Root = () => {
+  const dispatch = useDispatch();
+  const { data, isSuccess, isError } = useGetCurrentUserQuery();
+
+  useEffect(() => {
+    if (isSuccess && data?.user) {
+      dispatch(setUser(data.user));
+    } else if (isError) {
+      dispatch(logoutUser());
+    }
+  }, [isSuccess, isError, data, dispatch]);
+
   return (
     <div>
       <Navbar />

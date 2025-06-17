@@ -2,6 +2,7 @@ import { Router } from "express";
 import { Users } from "../models/User.js";
 import { generateToken } from "../utils/jwt.js";
 import bcrypt from "bcryptjs";
+import verifyToken from "../middleware/verifyToken.js";
 const router = Router();
 
 router.post("/signup", async (req, res) => {
@@ -47,13 +48,14 @@ router.post("/login", async (req, res) => {
       userID: user._id,
       email: user.email,
     });
+    const { password: _password, ...userWithoutPassword } = user._doc;
     res
       .cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       })
-      .json({ msg: "Login successful", user: user });
+      .json({ msg: "Login successful", user: userWithoutPassword });
   } catch (error) {
     return res.status(500).json({ msg: "Server error, try again later." });
   }
@@ -67,13 +69,21 @@ router.post("/logout", (req, res) => {
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       })
-      .status(500)
+      .status(200)
       .json({ msg: "Logout successfully" });
   } catch (error) {
     return res.status(500).json({
       msg: "Something went wrong during logout",
     });
   }
+});
+
+router.get("/profile", verifyToken, async (req, res) => {
+  try {
+    const { userID, email } = req.user;
+    const user = await Users.findOne({ email }, { password: false });
+    res.json({ msg: "Token Received Succefully", user: user });
+  } catch (error) {}
 });
 
 export default router;

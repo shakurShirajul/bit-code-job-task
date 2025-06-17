@@ -1,15 +1,27 @@
 import { Mail, User, Lock, UserPlus, Image } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useSignupMutation } from "../../features/api/baseAPI";
 
 const Signup = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+  const [setSignupUser] = useSignupMutation();
+  const navigate = useNavigate();
+  const onSubmit = async (data) => {
+    try {
+      const response = await setSignupUser(data).unwrap();
+      if (response) {
+        reset();
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
