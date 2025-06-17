@@ -31,6 +31,9 @@ export const baseAPI = createApi({
     getCurrentUser: builder.query({
       query: () => "/auth/profile",
     }),
+    getRoadmap: builder.query({
+      query: () => "/roadmap",
+    }),
   }),
 });
 export const {
@@ -38,4 +41,5 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useGetCurrentUserQuery,
+  useGetRoadmapQuery,
 } = baseAPI;

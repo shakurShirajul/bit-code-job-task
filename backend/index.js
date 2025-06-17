@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./src/routes/authRoutes.js";
+import roadmapRoutes from "./src/routes/roadmapRoutes.js";
 import { database } from "./src/config/db.js";
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(
 
 // Auth Routes
 app.use("/auth", authRoutes);
+app.use("/roadmap", roadmapRoutes);
 
 app.get("/", (req, res) => {
   res.send({ name: "shirajul" });

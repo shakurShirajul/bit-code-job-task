@@ -31,14 +31,10 @@ const roadmapSchema = new mongoose.Schema(
       ref: "Comment",
       default: [],
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
   },
   {
     timestamps: true,
   }
 );
 
-export const Roadmaps = mongoose.model("Roadmap", roadmapSchema);
+export const Roadmap = mongoose.model("Roadmap", roadmapSchema);

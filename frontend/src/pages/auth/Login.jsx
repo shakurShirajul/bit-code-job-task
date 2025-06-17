@@ -19,6 +19,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const response = await setLoginUser(data).unwrap();
+      console.log(response);
       if (response) {
         dispatch(setUser(response.user));
         reset();

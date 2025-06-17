@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Users } from "../models/User.js";
+import { User } from "../models/User.js";
 import { generateToken } from "../utils/jwt.js";
 import bcrypt from "bcryptjs";
 import verifyToken from "../middleware/verifyToken.js";
@@ -13,12 +13,12 @@ router.post("/signup", async (req, res) => {
         .status(400)
         .json({ msg: "Please provide name, email and password" });
     }
-    const user = await Users.findOne({ email }, { password: false });
+    const user = await User.findOne({ email }, { password: false });
     if (user) {
       return res.status(400).json({ msg: "User already exists" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const response = await Users.create({
+    const response = await User.create({
       name,
       email,
       image,
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ msg: "Please provide email and password" });
     }
-    const user = await Users.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ msg: "Email or password is incorrect" });
     }
@@ -81,7 +81,7 @@ router.post("/logout", (req, res) => {
 router.get("/profile", verifyToken, async (req, res) => {
   try {
     const { userID, email } = req.user;
-    const user = await Users.findOne({ email }, { password: false });
+    const user = await User.findOne({ email }, { password: false });
     res.json({ msg: "Token Received Succefully", user: user });
   } catch (error) {}
 });
