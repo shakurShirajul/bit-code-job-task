@@ -14,8 +14,8 @@ const Card = ({ data }) => {
               {data.title}
             </h3>
             <div className="flex items-center gap-2 mb-2">
-              <Badge status="In Progress" />
-              <Badge status="Collaboration" />
+              <Badge status={data.status} />
+              <Badge status={data.category} />
             </div>
           </div>
         </div>
