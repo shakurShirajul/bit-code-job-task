@@ -1,11 +1,16 @@
 import { Calendar, ChevronUp, MessageCircle } from "lucide-react";
 import Badge from "./Badge";
+import { useNavigate } from "react-router";
 
 const Card = ({ data }) => {
+  const navigate = useNavigate();
   return (
     <div
       className="cursor-pointer bg-white/10 backdrop-blur-md border border-white/20 p-5  rounded-2xl hover:scale-105 transition duration-200"
-      // onClick={onClick}
+      onClick={() => {
+        console.log("Shakur");
+        navigate(`/roadmap/details/${data._id}`);
+      }}
     >
       <div className="pb-3">
         <div className="flex items-start justify-between">
@@ -30,11 +35,11 @@ const Card = ({ data }) => {
           <div className="flex items-center gap-4 text-sm text-gray-100">
             <div className="flex items-center gap-1">
               <Calendar className="w-4 h-4" />
-              {data.createdAt}
+              {new Date(data.createdAt).toLocaleDateString("en-GB")}
             </div>
             <div className="flex items-center gap-1">
               <MessageCircle className="w-4 h-4" />
-              {}
+              {data.comments.length}
             </div>
           </div>
 

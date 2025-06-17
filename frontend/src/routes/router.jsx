@@ -3,6 +3,7 @@ import Root from "../layout/Root";
 import Signup from "../pages/auth/Signup";
 import Login from "../pages/auth/login";
 import Home from "../pages/home/Home";
+import RoadmapDetails from "../pages/roadmap/RoadmapDetails";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "/roadmap/details/:id",
+        Component: RoadmapDetails,
       },
     ],
   },

@@ -34,6 +34,9 @@ export const baseAPI = createApi({
     getRoadmap: builder.query({
       query: () => "/roadmap",
     }),
+    getRoadmapByID: builder.query({
+      query: (id) => `/roadmap/${id}`,
+    }),
   }),
 });
 export const {
@@ -42,4 +45,5 @@ export const {
   useLogoutMutation,
   useGetCurrentUserQuery,
   useGetRoadmapQuery,
+  useGetRoadmapByIDQuery,
 } = baseAPI;

@@ -193,7 +193,7 @@ const Home = () => {
   if (isLoading) return <p>Loading...</p>;
   return (
     <div>
-      <div className="flex gap-5 py-10">
+      <div className="flex gap-5 pb-10">
         <div className="flex-1">
           <SearchInput />
         </div>

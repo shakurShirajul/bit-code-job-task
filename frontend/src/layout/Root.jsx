@@ -29,7 +29,7 @@ const Root = () => {
         <div>
           <Navbar />
           <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 font-robotoo">
-            <div className="max-w-7xl mx-auto pt-10">
+            <div className="max-w-7xl mx-auto pt-25">
               <Outlet />
             </div>
           </div>
