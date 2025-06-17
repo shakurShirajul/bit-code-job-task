@@ -63,6 +63,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/logout", (req, res) => {
   try {
+    console.log("Hitting Logout Routes");
     res
       .clearCookie("token", {
         httpOnly: true,
@@ -83,7 +84,11 @@ router.get("/profile", verifyToken, async (req, res) => {
     const { userID, email } = req.user;
     const user = await User.findOne({ email }, { password: false });
     res.json({ msg: "Token Received Succefully", user: user });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({
+      msg: "Something went wrong during logout",
+    });
+  }
 });
 
 export default router;

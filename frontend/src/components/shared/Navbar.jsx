@@ -1,15 +1,18 @@
 import { LogOut, User } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import logo from "../../assets/logo/logo.svg";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../features/authSlice";
+import { useLogoutMutation } from "../../features/api/baseAPI";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [setLogout] = useLogoutMutation();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -73,9 +76,11 @@ const Navbar = () => {
                   </button>
                   <button
                     className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm hover:bg-white/20 transition rounded-b-xl"
-                    onClick={() => {
-                      setDropdownOpen(false);
+                    onClick={async () => {
+                      await setLogout();
                       dispatch(logoutUser());
+                      navigate("/auth/login");
+                      setDropdownOpen(false);
                     }}
                   >
                     <LogOut size={16} /> Logout

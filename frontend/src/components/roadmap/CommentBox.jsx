@@ -15,26 +15,7 @@ const CommentBox = ({ data }) => {
 
       <div className="space-y-6">
         <CommentForm loggedUser={loggedUser} />
-
-        <div className="space-y-4">
-          {/* {comments.map((comment) => (
-            <CommentItem
-              key={comment.id}
-              comment={comment}
-              user={user}
-              onReply={(content) => addComment(content, comment.id)}
-              onEdit={(content) => updateComment(comment.id, content)}
-              onDelete={() => deleteComment(comment.id)}
-              depth={0}
-            />
-          ))} */}
-
-          {/* {comments.length === 0 && (
-            <div className="text-center py-8 text-gray-500">
-              No comments yet. Be the first to share your thoughts!
-            </div>
-          )} */}
-        </div>
+        <div className="space-y-4"></div>
       </div>
     </div>
   );

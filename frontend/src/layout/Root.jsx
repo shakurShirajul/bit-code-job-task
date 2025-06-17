@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Navbar from "../components/shared/Navbar";
 import { Navigate, Outlet, useLocation } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetCurrentUserQuery } from "../features/api/baseAPI";
 import { logoutUser, setUser } from "../features/authSlice";
 import LoadingScreen from "../components/shared/LoadingScreen";
@@ -9,6 +9,7 @@ import LoadingScreen from "../components/shared/LoadingScreen";
 const Root = () => {
   const dispatch = useDispatch();
   const { data, isSuccess, isLoading, isError } = useGetCurrentUserQuery();
+  const user = useSelector((state) => state.auth.user);
   const location = useLocation();
 
   useEffect(() => {
@@ -17,7 +18,7 @@ const Root = () => {
     } else if (isError) {
       dispatch(logoutUser());
     }
-  }, [isSuccess, isError, data, dispatch]);
+  }, [isSuccess, isError, data, dispatch, user]);
 
   if (isLoading) {
     return <LoadingScreen />;
