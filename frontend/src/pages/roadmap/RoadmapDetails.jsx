@@ -6,8 +6,7 @@ import CommentBox from "../../components/roadmap/CommentBox";
 
 const RoadmapDetails = () => {
   const { id } = useParams();
-  const { data, isLoading } = useGetRoadmapByIDQuery(id);
-  console.log("Details", data);
+  const { data, isLoading, refetch } = useGetRoadmapByIDQuery(id);
   if (isLoading) {
     return <div>Loading......</div>;
   }
@@ -32,12 +31,7 @@ const RoadmapDetails = () => {
               </div>
             </div>
 
-            <button
-              // variant={hasVoted ? "default" : "outline"}
-              // onClick={handleVote}
-              // disabled={hasVoted}
-              className="flex items-center cursor-pointer border border-white/20 gap-2 hover:bg-white/20 text-white rounded-xl px-2 py-1"
-            >
+            <button className="flex items-center cursor-pointer border border-white/20 gap-2 hover:bg-white/20 text-white rounded-xl px-2 py-1">
               <ChevronUp className="w-4 h-4" />
               {data.upvotes.length}
             </button>
@@ -51,7 +45,7 @@ const RoadmapDetails = () => {
         </div>
       </div>
       <div>
-        <CommentBox data={data.comments} />
+        <CommentBox data={data.comments} refetch={refetch} roadmapID={id} />
       </div>
     </div>
   );

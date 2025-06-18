@@ -6,15 +6,15 @@ const commentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    authorId: {
+    authorID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    roadmapId: {
+    roadmapID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Roadmap",
     },
-    parentCommentId: {
+    parentCommentID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
       default: null,

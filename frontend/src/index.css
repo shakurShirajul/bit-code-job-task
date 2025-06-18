@@ -6,3 +6,8 @@
   --font-open-sans: "Open Sans", sans-serif;
   --font-roboto: "Roboto", sans-serif;
 }
+@layer components {
+  .button-primary {
+    @apply flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-200 shadow-sm disabled:cursor-not-allowed disabled:hover:bg-white/10;
+  }
+}

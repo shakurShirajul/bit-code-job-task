@@ -37,6 +37,34 @@ export const baseAPI = createApi({
     getRoadmapByID: builder.query({
       query: (id) => `/roadmap/${id}`,
     }),
+    createComment: builder.mutation({
+      query: (credentials) => ({
+        url: "/comment/create",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
+    editComment: builder.mutation({
+      query: (credentials) => ({
+        url: "/comment/edit",
+        method: "PUT",
+        body: credentials,
+      }),
+    }),
+    deleteComment: builder.mutation({
+      query: (credentials) => ({
+        url: "/comment/delete",
+        method: "DELETE",
+        body: credentials,
+      }),
+    }),
+    replyComment: builder.mutation({
+      query: (credentials) => ({
+        url: "/comment/reply",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
   }),
 });
 export const {
@@ -46,4 +74,8 @@ export const {
   useGetCurrentUserQuery,
   useGetRoadmapQuery,
   useGetRoadmapByIDQuery,
+  useCreateCommentMutation,
+  useEditCommentMutation,
+  useDeleteCommentMutation,
+  useReplyCommentMutation,
 } = baseAPI;

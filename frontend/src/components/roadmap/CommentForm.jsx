@@ -1,25 +1,68 @@
-import { Send } from "lucide-react";
+import { Send, X } from "lucide-react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
-const CommentForm = ({ loggedUser }) => {
+const CommentForm = ({
+  type,
+  roadmapID,
+  queryFunction,
+  optionFunction,
+  setOptionFunction,
+  placeholder = "",
+  initialState = "",
+}) => {
+  const user = useSelector((state) => state.auth.user);
+  const [textareaContent, setTextareaContent] = useState(initialState);
+
   return (
     <div className="flex gap-2">
-      <div>
-        <img
-          src={loggedUser.image}
-          className="h-11 w-11 rounded-full object-cover"
-        />
-      </div>
+      {(type === "Create" || type === "Reply") && (
+        <div>
+          <img
+            src={user.image}
+            className="h-11 w-11 rounded-full object-cover"
+          />
+        </div>
+      )}
       <div className="flex-1 space-y-1">
         <textarea
-          //   value={content}
-          //   onChange={(e) => setContent(e.target.value)}
-          //   placeholder={placeholder}
+          value={textareaContent}
+          onChange={(e) => setTextareaContent(e.target.value)}
+          placeholder={placeholder}
           className="w-full  min-h-[100px] bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white p-3 focus:outline-none focus:ring-2 focus:ring-white/30 placeholder:text-white/40 resize-none"
           maxLength={300}
         />
-        <div className="flex justify-end">
-          <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-200 shadow-sm">
-            <Send /> Send
+        <div className="text-xs text-white mt-1">
+          {textareaContent.length}/300 characters
+        </div>
+        <div className="flex justify-end gap-2">
+          {(type === "Edit" || type === "Reply") && (
+            <button
+              onClick={async () => {
+                console.log("Here");
+                setOptionFunction(!optionFunction);
+              }}
+              type="submit"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-200 shadow-sm disabled:cursor-not-allowed disabled:hover:bg-white/10"
+            >
+              <X className="w-4 h-4 mr-1" /> Cancel
+            </button>
+          )}
+          <button
+            disabled={!textareaContent || textareaContent.trim() === ""}
+            className="button-primary"
+            onClick={() => {
+              console.log("Hitting");
+              queryFunction({
+                content: textareaContent,
+                authorID: user._id,
+                roadmapID: roadmapID,
+              });
+              setTextareaContent("");
+            }}
+          >
+            <Send />
+            {type === "Edit" ? "Update" : "Send"}
           </button>
         </div>
       </div>
