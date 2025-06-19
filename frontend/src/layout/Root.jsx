@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Navbar from "../components/shared/Navbar";
-import { Navigate, Outlet, useLocation } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetCurrentUserQuery } from "../features/api/baseAPI";
 import { logoutUser, setUser } from "../features/authSlice";
@@ -10,7 +10,6 @@ const Root = () => {
   const dispatch = useDispatch();
   const { data, isSuccess, isLoading, isError } = useGetCurrentUserQuery();
   const user = useSelector((state) => state.auth.user);
-  const location = useLocation();
 
   useEffect(() => {
     if (isSuccess && data?.user) {
@@ -26,18 +25,18 @@ const Root = () => {
 
   return (
     <div>
-      {data ? (
-        <div>
-          <Navbar />
-          <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 font-robotoo">
-            <div className="max-w-7xl mx-auto pt-25">
-              <Outlet />
-            </div>
+      {/* {data ? ( */}
+      <div>
+        <Navbar />
+        <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 font-robotoo">
+          <div className="max-w-7xl mx-auto pt-25">
+            <Outlet />
           </div>
         </div>
-      ) : (
-        <Navigate to="/auth/login" replace state={{ from: location }} />
-      )}
+      </div>
+      {/* ) : (
+      <Navigate to="/auth/login" replace state={{ from: location }} />
+      )} */}
     </div>
   );
 };

@@ -19,6 +19,9 @@ const Card = ({ data, refetch }) => {
   };
 
   const navigate = useNavigate();
+
+  const isUpvoted = data.upvotes.includes(user._id);
+
   return (
     <div
       className="cursor-pointer bg-white/10 backdrop-blur-md border border-white/20 p-5  rounded-2xl hover:scale-105 transition duration-200"
@@ -61,7 +64,9 @@ const Card = ({ data, refetch }) => {
           <button
             size="sm"
             onClick={handleVote}
-            className="flex items-center cursor-pointer border border-white/20 gap-2 hover:bg-white/20 text-white rounded-xl px-2 py-1"
+            className={`${
+              isUpvoted && "bg-white/20"
+            } flex items-center cursor-pointer border border-white/20 gap-2 hover:bg-white/20 text-white rounded-xl px-2 py-1`}
           >
             <ChevronUp className="w-4 h-4 " />
             {data.upvotes.length}

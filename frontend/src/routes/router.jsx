@@ -4,11 +4,13 @@ import Signup from "../pages/auth/Signup";
 import Login from "../pages/auth/login";
 import Home from "../pages/home/Home";
 import RoadmapDetails from "../pages/roadmap/RoadmapDetails";
+import { redirectIfAuthenticated, requireAuth } from "../utils/authloader";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
+    loader: requireAuth(),
     children: [
       {
         index: true,
@@ -23,10 +25,12 @@ const router = createBrowserRouter([
   {
     path: "/auth/signup",
     Component: Signup,
+    loader: redirectIfAuthenticated(),
   },
   {
     path: "/auth/login",
     Component: Login,
+    loader: redirectIfAuthenticated(),
   },
 ]);
 export default router;

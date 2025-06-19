@@ -29,7 +29,7 @@ const RoadmapDetails = () => {
   if (isLoading) {
     return <div>Loading......</div>;
   }
-
+  const isUpvoted = data.upvotes.includes(user._id);
   return (
     <div className="space-y-5">
       <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5">
@@ -55,7 +55,9 @@ const RoadmapDetails = () => {
               onClick={() => {
                 handleUpvotes();
               }}
-              className="flex items-center cursor-pointer border border-white/20 gap-2 hover:bg-white/20 text-white rounded-xl px-2 py-1"
+              className={`${
+                isUpvoted && "bg-white/20"
+              } flex items-center cursor-pointer border border-white/20 gap-2 hover:bg-white/20 text-white rounded-xl px-2 py-1`}
             >
               <ChevronUp className="w-4 h-4" />
               {data.upvotes.length}
