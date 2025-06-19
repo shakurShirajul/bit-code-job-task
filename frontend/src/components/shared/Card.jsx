@@ -1,8 +1,23 @@
 import { Calendar, ChevronUp, MessageCircle } from "lucide-react";
 import Badge from "./Badge";
 import { useNavigate } from "react-router";
+import { useUpvotesRoadmapMutation } from "../../features/api/baseAPI";
+import { useSelector } from "react-redux";
 
-const Card = ({ data }) => {
+const Card = ({ data, refetch }) => {
+  const [toggleUpvote] = useUpvotesRoadmapMutation();
+  const user = useSelector((item) => item.auth.user);
+  const handleVote = async (event) => {
+    event.stopPropagation();
+    const response = await toggleUpvote({
+      authorID: user._id,
+      roadmapID: data._id,
+    });
+    if (response) {
+      refetch();
+    }
+  };
+
   const navigate = useNavigate();
   return (
     <div
@@ -44,14 +59,12 @@ const Card = ({ data }) => {
           </div>
 
           <button
-            //   variant={hasVoted ? "default" : "outline"}
             size="sm"
-            //   onClick={handleVote}
-            //   disabled={hasVoted}
-            className="flex items-center gap-1 text-gray-100"
+            onClick={handleVote}
+            className="flex items-center cursor-pointer border border-white/20 gap-2 hover:bg-white/20 text-white rounded-xl px-2 py-1"
           >
             <ChevronUp className="w-4 h-4 " />
-            10
+            {data.upvotes.length}
           </button>
         </div>
       </div>

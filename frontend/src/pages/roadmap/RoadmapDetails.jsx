@@ -1,15 +1,35 @@
 import { Calendar, ChevronUp } from "lucide-react";
 import { useParams } from "react-router";
 import Badge from "../../components/shared/Badge";
-import { useGetRoadmapByIDQuery } from "../../features/api/baseAPI";
+import {
+  useGetRoadmapByIDQuery,
+  useUpvotesRoadmapMutation,
+} from "../../features/api/baseAPI";
 import CommentBox from "../../components/roadmap/CommentBox";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const RoadmapDetails = () => {
   const { id } = useParams();
   const { data, isLoading, refetch } = useGetRoadmapByIDQuery(id);
+  const user = useSelector((item) => item.auth.user);
+  const [toggleUpvote] = useUpvotesRoadmapMutation();
+  const handleUpvotes = async () => {
+    const response = await toggleUpvote({
+      authorID: user._id,
+      roadmapID: data._id,
+    });
+    if (response) {
+      refetch();
+    }
+  };
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   if (isLoading) {
     return <div>Loading......</div>;
   }
+
   return (
     <div className="space-y-5">
       <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5">
@@ -31,7 +51,12 @@ const RoadmapDetails = () => {
               </div>
             </div>
 
-            <button className="flex items-center cursor-pointer border border-white/20 gap-2 hover:bg-white/20 text-white rounded-xl px-2 py-1">
+            <button
+              onClick={() => {
+                handleUpvotes();
+              }}
+              className="flex items-center cursor-pointer border border-white/20 gap-2 hover:bg-white/20 text-white rounded-xl px-2 py-1"
+            >
               <ChevronUp className="w-4 h-4" />
               {data.upvotes.length}
             </button>

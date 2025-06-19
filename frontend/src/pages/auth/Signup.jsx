@@ -12,6 +12,7 @@ const Signup = () => {
   } = useForm();
   const [setSignupUser] = useSignupMutation();
   const navigate = useNavigate();
+
   const onSubmit = async (data) => {
     try {
       const response = await setSignupUser(data).unwrap();
@@ -20,114 +21,113 @@ const Signup = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="w-full max-w-md border border-gray-200 rounded-2xl p-5 shadow-xl space-y-4">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-bold text-center">Join Our Community</h1>
-          <p className="text-center text-gray-600">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-900 to-indigo-900 p-4">
+      <div className="w-full max-w-md rounded-2xl border border-white/20 bg-white/10 backdrop-blur-lg p-6 shadow-2xl space-y-6">
+        <div className="space-y-2 text-center">
+          <h1 className="text-3xl font-bold text-white">Join Our Community</h1>
+          <p className="text-sm text-white/70">
             Create your account and start shaping the future
           </p>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-4">
-            {/* Name */}
-            <div className="space-y-2">
-              <label className="text-xs font-bold">Name</label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  placeholder="e.g. John Doe"
-                  type="text"
-                  className="w-full pl-10 rounded-md py-1.5 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
-                  {...register("name", {
-                    required: "Name is required",
-                  })}
-                />
-              </div>
-              {errors.name && (
-                <p className="text-red-500 text-sm">{errors.name.message}</p>
-              )}
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* Name */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-white">Name</label>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/60" />
+              <input
+                {...register("name", { required: "Name is required" })}
+                placeholder="John Doe"
+                className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/10 border border-white/30 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/40"
+              />
             </div>
-            {/* Email */}
-            <div className="space-y-2">
-              <label className="text-xs font-bold">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  placeholder="me@example.com"
-                  className="w-full pl-10 rounded-md py-1.5 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^\S+@\S+$/i,
-                      message: "Invalid email format",
-                    },
-                  })}
-                />
-              </div>
-              {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email.message}</p>
-              )}
+            {errors.name && (
+              <p className="text-xs text-red-400">{errors.name.message}</p>
+            )}
+          </div>
+
+          {/* Email */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-white">Email</label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/60" />
+              <input
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Invalid email format",
+                  },
+                })}
+                type="email"
+                placeholder="you@example.com"
+                className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/10 border border-white/30 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/40"
+              />
             </div>
-            {/* Image */}
-            <div className="space-y-2">
-              <label className="text-xs font-bold">User Image</label>
-              <div className="relative">
-                <Image className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Enter image URL (optional)"
-                  className="w-full pl-10 rounded-md py-1.5 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
-                  {...register("image")}
-                />
-              </div>
-            </div>
-            {/* Password */}
-            <div className="space-y-2">
-              <label className="text-xs font-bold">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  type="password"
-                  placeholder="****************"
-                  {...register("password", {
-                    required: "Password is required",
-                  })}
-                  className="w-full pl-10 rounded-md py-1.5 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
-                />
-              </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-            {/* Button */}
-            <div className="space-y-2">
-              <button className="w-full rounded bg-sky-800 text-white p-2 text-center font-bold hover:bg-sky-700">
-                <span className="flex gap-2 justify-center">
-                  <UserPlus /> Create Account
-                </span>
-              </button>
-              <div className="text-center text-sm space-x-1">
-                <span className="text-muted-foreground">
-                  Already have an account?
-                </span>
-                <Link to="/auth/login">
-                  <span className="text-blue-950 hover:text-blue-700">
-                    Login
-                  </span>
-                </Link>
-              </div>
+            {errors.email && (
+              <p className="text-xs text-red-400">{errors.email.message}</p>
+            )}
+          </div>
+
+          {/* Image URL */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-white">User Image</label>
+            <div className="relative">
+              <Image className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/60" />
+              <input
+                {...register("image")}
+                placeholder="Optional image URL"
+                className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/10 border border-white/30 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/40"
+              />
             </div>
           </div>
+
+          {/* Password */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-white">Password</label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/60" />
+              <input
+                {...register("password", { required: "Password is required" })}
+                type="password"
+                placeholder="••••••••"
+                className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/10 border border-white/30 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/40"
+              />
+            </div>
+            {errors.password && (
+              <p className="text-xs text-red-400">{errors.password.message}</p>
+            )}
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            className="w-full flex justify-center items-center gap-2 py-2 px-4 rounded-xl bg-sky-700 hover:bg-sky-600 transition text-white font-semibold shadow-md"
+          >
+            <UserPlus className="w-4 h-4" />
+            Create Account
+          </button>
         </form>
+
+        {/* Link to Login */}
+        <p className="text-center text-sm text-white/70">
+          Already have an account?{" "}
+          <Link
+            to="/auth/login"
+            className="text-sky-300 hover:underline hover:text-sky-200"
+          >
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
 };
+
 export default Signup;

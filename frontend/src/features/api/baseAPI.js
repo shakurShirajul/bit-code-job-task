@@ -65,6 +65,13 @@ export const baseAPI = createApi({
         body: credentials,
       }),
     }),
+    upvotesRoadmap: builder.mutation({
+      query: (credentials) => ({
+        url: "/roadmap/upvotes",
+        method: "PUT",
+        body: credentials,
+      }),
+    }),
   }),
 });
 export const {
@@ -78,4 +85,5 @@ export const {
   useEditCommentMutation,
   useDeleteCommentMutation,
   useReplyCommentMutation,
+  useUpvotesRoadmapMutation,
 } = baseAPI;

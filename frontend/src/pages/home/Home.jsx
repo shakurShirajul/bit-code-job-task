@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import FilterSelect from "../../components/home/FilterSelect";
 import SearchInput from "../../components/home/SearchInput";
 import Card from "../../components/shared/Card";
@@ -187,8 +188,10 @@ import { useGetRoadmapQuery } from "../../features/api/baseAPI";
 // ];
 
 const Home = () => {
-  const { data, isLoading } = useGetRoadmapQuery();
-  // console.log(data);
+  const { data, isLoading, refetch } = useGetRoadmapQuery();
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   if (isLoading) return <p>Loading...</p>;
   return (
@@ -219,7 +222,7 @@ const Home = () => {
 
       <div className="grid grid-cols-3 gap-5 pb-5">
         {data.data.map((data) => (
-          <Card data={data} />
+          <Card data={data} refetch={refetch} />
         ))}
       </div>
     </div>
