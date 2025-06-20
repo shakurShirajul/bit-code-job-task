@@ -37,4 +37,5 @@ const roadmapSchema = new mongoose.Schema(
   }
 );
 
+roadmapSchema.index({ title: "text" }, { default_language: "none" });
 export const Roadmap = mongoose.model("Roadmap", roadmapSchema);

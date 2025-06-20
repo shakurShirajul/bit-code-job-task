@@ -8,7 +8,19 @@ const router = Router();
 
 router.get("", async (req, res) => {
   try {
-    const roadmaps = await Roadmap.find({});
+    const { title, category } = req.query;
+    let query = {};
+    if (title) {
+      query = {
+        $text: {
+          $search: title,
+          $caseSensitive: false,
+        },
+      };
+    } else if (category) {
+      query.category = category;
+    }
+    const roadmaps = await Roadmap.find(query);
     res.status(200).json({ data: roadmaps });
   } catch (error) {
     console.error("Error fetching roadmaps:", error);
