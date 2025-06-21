@@ -1,9 +1,10 @@
-import { Lock, LogIn, Mail } from "lucide-react";
+import { Lock, LogIn, Mail, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { useLoginMutation } from "../../features/api/baseAPI";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../features/authSlice";
+import { useState } from "react";
 
 const Login = () => {
   const {
@@ -12,6 +13,9 @@ const Login = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   const dispatch = useDispatch();
 
   const [setLoginUser] = useLoginMutation();
@@ -27,6 +31,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error(error);
+      setErrorMessage(error.data.msg);
     }
   };
 
@@ -39,6 +44,20 @@ const Login = () => {
             Enter your credentials to access your account
           </p>
         </div>
+        {errorMessage && (
+          <div className="bg-red-900/50 text-red-300 flex items-center justify-between py-3 px-4 border border-red-700 rounded-xl">
+            <span>Incorrect username or password.</span>
+            <button
+              type="button"
+              className="text-red-300 hover:text-red-100 cursor-pointer"
+              onClick={() => {
+                setErrorMessage("");
+              }}
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Email */}
