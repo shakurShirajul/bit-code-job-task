@@ -1,5 +1,5 @@
 import { Send, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 const CommentForm = ({
@@ -13,7 +13,6 @@ const CommentForm = ({
 }) => {
   const user = useSelector((state) => state.auth.user);
   const [textareaContent, setTextareaContent] = useState(initialState);
-
   return (
     <div className="flex gap-2">
       {(type === "Create" || type === "Reply") && (
@@ -25,15 +24,17 @@ const CommentForm = ({
         </div>
       )}
       <div className="flex-1 space-y-1">
-        <textarea
-          value={textareaContent}
-          onChange={(e) => setTextareaContent(e.target.value)}
-          placeholder={placeholder}
-          className="w-full  min-h-[100px] bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white p-3 focus:outline-none focus:ring-2 focus:ring-white/30 placeholder:text-white/40 resize-none"
-          maxLength={300}
-        />
-        <div className="text-xs text-white mt-1">
-          {textareaContent.length}/300 characters
+        <div>
+          <textarea
+            value={textareaContent}
+            onChange={(e) => setTextareaContent(e.target.value)}
+            placeholder={placeholder}
+            className="w-full  min-h-[100px] bg-white/5 backdrop-blur-md border border-white/20 rounded-xl text-white p-3 focus:outline-none focus:ring-2 focus:ring-white/30 placeholder:text-white/40 resize-none"
+            maxLength={300}
+          />
+          <div className="text-xs text-white ml-2 mt-0.5">
+            {textareaContent.length}/300 characters
+          </div>
         </div>
         <div className="flex justify-end gap-2">
           {(type === "Edit" || type === "Reply") && (

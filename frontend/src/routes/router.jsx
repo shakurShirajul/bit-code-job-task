@@ -10,7 +10,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
-    loader: requireAuth(),
     children: [
       {
         index: true,
@@ -18,6 +17,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/roadmap/details/:id",
+        loader: requireAuth(),
         Component: RoadmapDetails,
       },
     ],

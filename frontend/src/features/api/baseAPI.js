@@ -32,7 +32,15 @@ export const baseAPI = createApi({
       query: () => "/auth/profile",
     }),
     getRoadmap: builder.query({
-      query: () => "/roadmap",
+      query: ({ title, status, category } = {}) => {
+        const params = new URLSearchParams();
+
+        if (title) params.append("title", title);
+        if (status) params.append("status", status);
+        if (category) params.append("category", category);
+        const queryString = params.toString();
+        return `/roadmap${queryString ? `?${queryString}` : ""}`;
+      },
     }),
     getRoadmapByID: builder.query({
       query: (id) => `/roadmap/${id}`,

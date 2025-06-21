@@ -1,5 +1,5 @@
 import { Edit, MoreHorizontal, Reply, Send, Trash2, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import CommentForm from "./CommentForm";
 import {
@@ -13,6 +13,19 @@ const CommentItem = ({ comment, roadmapID, refetch, depth = 0 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
+  const optionRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (optionRef.current && !optionRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Redux & RTK Query
   const [editComment] = useEditCommentMutation();
@@ -97,9 +110,11 @@ const CommentItem = ({ comment, roadmapID, refetch, depth = 0 }) => {
                     <button
                       onClick={() => {
                         setIsEditing(!isEditing);
+                        setIsReplying(false);
                         setIsOpen(false);
                       }}
                       className="px-4 py-2 w-full hover:bg-white/20 flex items-center cursor-pointer transition-colors rounded-t-lg text-white"
+                      ref={optionRef}
                     >
                       <Edit className="w-4 h-4 mr-2" />
                       Edit

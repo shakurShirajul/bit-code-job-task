@@ -1,5 +1,5 @@
-import { Calendar, ChevronUp } from "lucide-react";
-import { useParams } from "react-router";
+import { ArrowLeft, Calendar, ChevronUp } from "lucide-react";
+import { useNavigate, useParams } from "react-router";
 import Badge from "../../components/shared/Badge";
 import {
   useGetRoadmapByIDQuery,
@@ -14,6 +14,7 @@ const RoadmapDetails = () => {
   const { data, isLoading, refetch } = useGetRoadmapByIDQuery(id);
   const user = useSelector((item) => item.auth.user);
   const [toggleUpvote] = useUpvotesRoadmapMutation();
+  const navigate = useNavigate();
   const handleUpvotes = async () => {
     const response = await toggleUpvote({
       authorID: user._id,
@@ -27,11 +28,31 @@ const RoadmapDetails = () => {
     refetch();
   }, [refetch]);
   if (isLoading) {
-    return <div>Loading......</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="">
+          <div className="flex space-x-2">
+            <div className="w-3 h-3 bg-purple-400 rounded-full animate-bounce"></div>
+            <div className="w-3 h-3 bg-blue-400 rounded-full animate-bounce animation-delay-200"></div>
+            <div className="w-3 h-3 bg-indigo-400 rounded-full animate-bounce animation-delay-400"></div>
+            <div className="w-3 h-3 bg-pink-400 rounded-full animate-bounce animation-delay-600"></div>
+          </div>
+        </span>
+      </div>
+    );
   }
   const isUpvoted = data.upvotes.includes(user._id);
   return (
-    <div className="space-y-5">
+    <div className="min-h-screen space-y-5 px-5 pb-5 md:px-0">
+      <div>
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <ArrowLeft className="w-5 h-5 text-white" />
+          <span className="text-white text-sm">Back</span>
+        </button>
+      </div>
       <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5">
         <div>
           <div className="flex items-start justify-between">

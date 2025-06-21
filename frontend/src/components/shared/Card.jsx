@@ -8,6 +8,9 @@ const Card = ({ data, refetch }) => {
   const [toggleUpvote] = useUpvotesRoadmapMutation();
   const user = useSelector((item) => item.auth.user);
   const handleVote = async (event) => {
+    if (!user) {
+      navigate("/auth/login");
+    }
     event.stopPropagation();
     const response = await toggleUpvote({
       authorID: user._id,
@@ -20,7 +23,7 @@ const Card = ({ data, refetch }) => {
 
   const navigate = useNavigate();
 
-  const isUpvoted = data.upvotes.includes(user._id);
+  const isUpvoted = data?.upvotes?.includes(user?._id);
 
   return (
     <div

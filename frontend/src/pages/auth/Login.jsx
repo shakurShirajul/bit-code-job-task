@@ -84,7 +84,7 @@ const Login = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full flex justify-center items-center gap-2 py-2 px-4 rounded-xl bg-sky-700 hover:bg-sky-600 transition text-white font-semibold shadow-md"
+            className="w-full flex justify-center items-center gap-2 py-2 px-4 rounded-xl bg-sky-700 hover:bg-sky-600 transition text-white font-semibold shadow-md cursor-pointer"
           >
             <LogIn className="w-4 h-4" />
             Login
@@ -92,7 +92,7 @@ const Login = () => {
         </form>
 
         {/* Link to signup */}
-        <p className="text-center text-sm text-white/70">
+        <p className="text-center text-sm text-white/80">
           Don't have an account?{" "}
           <Link
             to="/auth/signup"

@@ -108,7 +108,7 @@ const Signup = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full flex justify-center items-center gap-2 py-2 px-4 rounded-xl bg-sky-700 hover:bg-sky-600 transition text-white font-semibold shadow-md"
+            className="w-full flex justify-center items-center gap-2 py-2 px-4 rounded-xl bg-sky-700 hover:bg-sky-600 transition text-white font-semibold shadow-md cursor-pointer"
           >
             <UserPlus className="w-4 h-4" />
             Create Account
@@ -116,7 +116,7 @@ const Signup = () => {
         </form>
 
         {/* Link to Login */}
-        <p className="text-center text-sm text-white/70">
+        <p className="text-center text-sm text-white/80">
           Already have an account?{" "}
           <Link
             to="/auth/login"

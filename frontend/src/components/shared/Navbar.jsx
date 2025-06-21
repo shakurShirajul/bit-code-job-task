@@ -1,4 +1,4 @@
-import { LogOut, User } from "lucide-react";
+import { LogIn, LogOut, User } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import logo from "../../assets/logo/logo.svg";
 import { Link, useNavigate } from "react-router";
@@ -42,52 +42,52 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="">
             {/* Right Side */}
-            <div className="relative" ref={dropdownRef}>
-              <button
-                className="h-11 w-1h-11 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden focus:outline-none"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                <img
-                  src={user?.image}
-                  className="h-11 w-1h-11 object-cover"
-                  alt={user?.name}
-                />
-              </button>
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-2  bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 backdrop-blur-md border border-white/20 rounded-xl shadow-lg text-white min-w-[220px] z-10">
-                  <button
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-white/20 transition rounded-t-xl"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    <div className="grid">
-                      <p className="font-medium">{user?.name}</p>
-                      <p className="w-[200px] truncate text-xs text-white/70">
-                        {user?.email}
-                      </p>
-                    </div>
-                  </button>
-                  <button
-                    className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm hover:bg-white/20 transition"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    <User size={16} /> Profile
-                  </button>
-                  <button
-                    className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm hover:bg-white/20 transition rounded-b-xl"
-                    onClick={async () => {
-                      await setLogout();
-                      dispatch(logoutUser());
-                      navigate("/auth/login");
-                      setDropdownOpen(false);
-                    }}
-                  >
-                    <LogOut size={16} /> Logout
-                  </button>
-                </div>
-              )}
-            </div>
+            {user ? (
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  className="h-11 w-1h-11 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden focus:outline-none"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                >
+                  <img
+                    src={user?.image}
+                    className="h-11 w-1h-11 object-cover"
+                    alt={user?.name}
+                  />
+                </button>
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2  bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 backdrop-blur-md border border-white/20 rounded-xl shadow-lg text-white min-w-[220px] z-10">
+                    <button
+                      className="w-full text-left px-4 py-2 text-sm hover:bg-white/20 transition rounded-t-xl"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <div className="grid">
+                        <p className="font-medium">{user?.name}</p>
+                        <p className="w-[200px] truncate text-xs text-white/70">
+                          {user?.email}
+                        </p>
+                      </div>
+                    </button>
+                    <button
+                      className="flex items-center gap-1 w-full text-left px-4 py-2 text-sm hover:bg-white/20 transition rounded-b-xl cursor-pointer"
+                      onClick={async () => {
+                        await setLogout();
+                        dispatch(logoutUser());
+                        navigate("/auth/login");
+                        setDropdownOpen(false);
+                      }}
+                    >
+                      <LogOut size={16} /> Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link to="/auth/login" className="button-primary cursor-pointer">
+                <LogIn /> Login
+              </Link>
+            )}
           </div>
         </div>
       </div>
