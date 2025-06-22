@@ -7,6 +7,7 @@ import {
   useEditCommentMutation,
   useReplyCommentMutation,
 } from "../../features/api/baseAPI";
+import profilePlaceholder from "../../assets/icon/profile.svg";
 
 const CommentItem = ({ comment, roadmapID, refetch, depth = 0 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,7 +83,7 @@ const CommentItem = ({ comment, roadmapID, refetch, depth = 0 }) => {
     <div className="w-full p-3 rounded-xl bg-white/5 backdrop-blur-md">
       <div className="flex gap-2">
         <img
-          src={comment?.authorID?.image || "/placeholder.svg"}
+          src={comment?.authorID?.image || profilePlaceholder}
           className="h-11 w-11 rounded-full object-cover"
           alt="User"
         />
@@ -106,7 +107,10 @@ const CommentItem = ({ comment, roadmapID, refetch, depth = 0 }) => {
                 </div>
 
                 {isOpen && (
-                  <div className="absolute right-0 mt-2  bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg z-10">
+                  <div
+                    className="absolute right-0 mt-2  bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg z-10"
+                    ref={optionRef}
+                  >
                     <button
                       onClick={() => {
                         setIsEditing(!isEditing);
@@ -114,7 +118,6 @@ const CommentItem = ({ comment, roadmapID, refetch, depth = 0 }) => {
                         setIsOpen(false);
                       }}
                       className="px-4 py-2 w-full hover:bg-white/20 flex items-center cursor-pointer transition-colors rounded-t-lg text-white"
-                      ref={optionRef}
                     >
                       <Edit className="w-4 h-4 mr-2" />
                       Edit

@@ -1,0 +1,53 @@
+<svg
+    width="200"
+    height="200"
+    viewBox="0 0 200 200"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <defs>
+        <linearGradient
+            id="pulseGradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+        >
+            <stop
+                offset="0%"
+                style="stop-color:#E0E0E0;stop-opacity:1"
+            >
+                <animate
+                    attributeName="stop-color"
+                    values="#E0E0E0;#BDBDBD;#E0E0E0"
+                    dur="4s"
+                    repeatCount="indefinite"
+                />
+            </stop>
+            <stop
+                offset="100%"
+                style="stop-color:#BDBDBD;stop-opacity:1"
+            >
+                <animate
+                    attributeName="stop-color"
+                    values="#BDBDBD;#E0E0E0;#BDBDBD"
+                    dur="4s"
+                    repeatCount="indefinite"
+                />
+            </stop>
+        </linearGradient>
+    </defs>
+
+    <rect
+        width="200"
+        height="200"
+        rx="100"
+        fill="url(#pulseGradient)"
+    />
+
+    <circle cx="100" cy="80" r="30" fill="#FFFFFF" />
+
+    <path
+        d="M 50 160 C 50 130, 150 130, 150 160 Z"
+        fill="#FFFFFF"
+    />
+</svg>

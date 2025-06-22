@@ -5,31 +5,33 @@ import Login from "../pages/auth/login";
 import Home from "../pages/home/Home";
 import RoadmapDetails from "../pages/roadmap/RoadmapDetails";
 import { redirectIfAuthenticated, requireAuth } from "../utils/authloader";
+import Error from "../pages/error/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: Root,
+    element: <Root />,
+    errorElement: <Error />,
     children: [
       {
         index: true,
-        Component: Home,
+        element: <Home />,
       },
       {
         path: "/roadmap/details/:id",
         loader: requireAuth(),
-        Component: RoadmapDetails,
+        element: <RoadmapDetails />,
       },
     ],
   },
   {
     path: "/auth/signup",
-    Component: Signup,
+    element: <Signup />,
     loader: redirectIfAuthenticated(),
   },
   {
     path: "/auth/login",
-    Component: Login,
+    element: <Login />,
     loader: redirectIfAuthenticated(),
   },
 ]);

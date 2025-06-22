@@ -29,7 +29,6 @@ const Card = ({ data, refetch }) => {
     <div
       className="cursor-pointer bg-white/10 backdrop-blur-md border border-white/20 p-5  rounded-2xl hover:scale-105 transition duration-200"
       onClick={() => {
-        console.log("Shakur");
         navigate(`/roadmap/details/${data._id}`);
       }}
     >

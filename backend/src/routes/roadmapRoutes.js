@@ -4,11 +4,12 @@ import { Types } from "mongoose";
 import { Comment } from "../models/Comment.js";
 import { User } from "../models/User.js";
 import { populate } from "dotenv";
+import verifyToken from "../middleware/verifyToken.js";
 const router = Router();
 
 router.get("", async (req, res) => {
   try {
-    const { title, category } = req.query;
+    const { title, category, status } = req.query;
     let query = {};
     if (title) {
       query = {
@@ -19,6 +20,8 @@ router.get("", async (req, res) => {
       };
     } else if (category) {
       query.category = category;
+    } else if (status) {
+      query.status = status;
     }
     const roadmaps = await Roadmap.find(query);
     res.status(200).json({ data: roadmaps });
@@ -31,7 +34,7 @@ router.get("", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyToken, async (req, res) => {
   try {
     const id = req.params.id;
     const roadmap = await Roadmap.findOne({ _id: id }).populate({
@@ -68,7 +71,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/upvotes", async (req, res) => {
+router.put("/upvotes", verifyToken, async (req, res) => {
   try {
     const { authorID, roadmapID } = req.body;
     if (!authorID || !roadmapID) {
@@ -83,7 +86,6 @@ router.put("/upvotes", async (req, res) => {
         .json({ success: false, message: "Roadmap not found." });
     }
     const hasUpvoted = roadmap.upvotes.some((id) => id.equals(authorID));
-    console.log("HasVoted", hasUpvoted, authorID);
     if (hasUpvoted) {
       const response = await Roadmap.updateOne(
         { _id: roadmapID },

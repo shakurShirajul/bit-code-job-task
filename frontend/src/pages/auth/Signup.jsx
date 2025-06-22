@@ -1,7 +1,8 @@
-import { Mail, User, Lock, UserPlus, Image } from "lucide-react";
+import { Mail, User, Lock, UserPlus, Image, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { useSignupMutation } from "../../features/api/baseAPI";
+import { useState } from "react";
 
 const Signup = () => {
   const {
@@ -11,6 +12,7 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
   const [setSignupUser] = useSignupMutation();
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -18,10 +20,11 @@ const Signup = () => {
       const response = await setSignupUser(data).unwrap();
       if (response) {
         reset();
-        navigate("/");
+        navigate("/auth/login");
       }
     } catch (error) {
       console.error(error);
+      setErrorMessage(error.data.msg);
     }
   };
 
@@ -34,6 +37,20 @@ const Signup = () => {
             Create your account and start shaping the future
           </p>
         </div>
+        {errorMessage && (
+          <div className="bg-red-900/50 text-red-300 flex items-center justify-between py-3 px-4 border border-red-700 rounded-xl">
+            <span>{errorMessage}</span>
+            <button
+              type="button"
+              className="text-red-300 hover:text-red-100 cursor-pointer"
+              onClick={() => {
+                setErrorMessage("");
+              }}
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Name */}

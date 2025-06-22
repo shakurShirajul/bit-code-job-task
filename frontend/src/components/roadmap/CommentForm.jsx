@@ -1,6 +1,7 @@
 import { Send, X } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import profilePlaceholder from "../../assets/icon/profile.svg";
 
 const CommentForm = ({
   type,
@@ -18,8 +19,9 @@ const CommentForm = ({
       {(type === "Create" || type === "Reply") && (
         <div>
           <img
-            src={user.image}
+            src={user.image ? user?.image : profilePlaceholder}
             className="h-11 w-11 rounded-full object-cover"
+            alt={user?.name}
           />
         </div>
       )}
@@ -40,7 +42,6 @@ const CommentForm = ({
           {(type === "Edit" || type === "Reply") && (
             <button
               onClick={async () => {
-                console.log("Here");
                 setOptionFunction(!optionFunction);
               }}
               type="submit"
@@ -53,7 +54,6 @@ const CommentForm = ({
             disabled={!textareaContent || textareaContent.trim() === ""}
             className="button-primary"
             onClick={() => {
-              console.log("Hitting");
               queryFunction({
                 content: textareaContent,
                 authorID: user._id,

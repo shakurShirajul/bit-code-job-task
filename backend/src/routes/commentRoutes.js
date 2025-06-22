@@ -3,10 +3,11 @@ import { Comment } from "../models/Comment.js";
 import { Roadmap } from "../models/Roadmap.js";
 import { Types } from "mongoose";
 import { deleteCommentRecursively } from "../utils/deleteCommentRecursively.js";
+import verifyToken from "../middleware/verifyToken.js";
 
 const router = Router();
 
-router.post("/create", async (req, res) => {
+router.post("/create", verifyToken, async (req, res) => {
   try {
     const { content, authorID, roadmapID, parentCommentID } = req.body;
     if (!content || !authorID || !roadmapID) {
@@ -31,7 +32,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.put("/edit", async (req, res) => {
+router.put("/edit", verifyToken, async (req, res) => {
   try {
     const { content, commentID, authorID, roadmapID } = req.body;
     const response = await Comment.updateOne(
@@ -50,7 +51,7 @@ router.put("/edit", async (req, res) => {
   }
 });
 
-router.post("/reply", async (req, res) => {
+router.post("/reply", verifyToken, async (req, res) => {
   try {
     const { content, commentID, authorID, roadmapID } = req.body;
     const replyComment = await Comment.create({
@@ -110,7 +111,7 @@ router.delete("/delete", async (req, res) => {
       }
     );
     if (updateRoadmap) {
-      return res.status(201).json({ message: "Comment Deleted Successfully" });
+      return res.status(201).json({ msg: "Comment Deleted Successfully" });
     }
   } catch (error) {
     res.status(500).json({ msg: "Server error, try again later." });

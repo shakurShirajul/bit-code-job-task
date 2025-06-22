@@ -46,7 +46,7 @@ const Login = () => {
         </div>
         {errorMessage && (
           <div className="bg-red-900/50 text-red-300 flex items-center justify-between py-3 px-4 border border-red-700 rounded-xl">
-            <span>Incorrect username or password.</span>
+            <span>{errorMessage}</span>
             <button
               type="button"
               className="text-red-300 hover:text-red-100 cursor-pointer"

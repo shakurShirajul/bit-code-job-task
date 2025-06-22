@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../features/authSlice";
 import { useLogoutMutation } from "../../features/api/baseAPI";
+import profilePlaceholder from "../../assets/icon/profile.svg";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -47,11 +48,11 @@ const Navbar = () => {
             {user ? (
               <div className="relative" ref={dropdownRef}>
                 <button
-                  className="h-11 w-1h-11 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden focus:outline-none"
+                  className="h-11 w-1h-11 rounded-full cursor-pointer bg-gray-200 flex items-center justify-center overflow-hidden focus:outline-none"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                   <img
-                    src={user?.image}
+                    src={user.image ? user?.image : profilePlaceholder}
                     className="h-11 w-1h-11 object-cover"
                     alt={user?.name}
                   />

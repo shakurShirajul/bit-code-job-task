@@ -15,7 +15,7 @@ router.post("/signup", async (req, res) => {
     }
     const user = await User.findOne({ email }, { password: false });
     if (user) {
-      return res.status(400).json({ msg: "User already exists" });
+      return res.status(400).json({ msg: "User already exists." });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const response = await User.create({
@@ -24,7 +24,7 @@ router.post("/signup", async (req, res) => {
       image,
       password: hashedPassword,
     });
-    return res.status(201).json({ message: "User created" });
+    return res.status(201).json({ message: "User created." });
   } catch (error) {
     res.status(500).json({ msg: "Server error, try again later." });
   }
@@ -34,15 +34,17 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(400).json({ msg: "Please provide email and password" });
+      return res
+        .status(400)
+        .json({ msg: "Please provide email and password." });
     }
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ msg: "Email or password is incorrect" });
+      return res.status(400).json({ msg: "Email or password is incorrect." });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: "Email or password is incorrect" });
+      return res.status(400).json({ msg: "Email or password is incorrect." });
     }
     const token = generateToken({
       userID: user._id,
@@ -55,7 +57,7 @@ router.post("/login", async (req, res) => {
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       })
-      .json({ msg: "Login successful", user: userWithoutPassword });
+      .json({ msg: "Login successful.", user: userWithoutPassword });
   } catch (error) {
     return res.status(500).json({ msg: "Server error, try again later." });
   }
@@ -63,7 +65,6 @@ router.post("/login", async (req, res) => {
 
 router.post("/logout", (req, res) => {
   try {
-    console.log("Hitting Logout Routes");
     res
       .clearCookie("token", {
         httpOnly: true,
@@ -74,7 +75,7 @@ router.post("/logout", (req, res) => {
       .json({ msg: "Logout successfully" });
   } catch (error) {
     return res.status(500).json({
-      msg: "Something went wrong during logout",
+      msg: "Something went wrong during logout.",
     });
   }
 });
@@ -86,7 +87,7 @@ router.get("/profile", verifyToken, async (req, res) => {
     res.json({ msg: "Token Received Succefully", user: user });
   } catch (error) {
     return res.status(500).json({
-      msg: "Something went wrong during logout",
+      msg: "Server error, try again later.",
     });
   }
 });
